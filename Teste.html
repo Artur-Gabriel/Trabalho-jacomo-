@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Conflitos entre Gerações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options button {
+            display: block;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .feedback {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quiz - Conflitos entre Gerações</h1>
+    <div id="quiz-container">
+        <div class="question" id="question"></div>
+        <div class="feedback hidden" id="feedback"></div>
+        <div class="options">
+            <button onclick="checkAnswer('A')" id="optionA"></button>
+            <button onclick="checkAnswer('B')" id="optionB"></button>
+            <button onclick="checkAnswer('C')" id="optionC"></button>
+            <button onclick="checkAnswer('D')" id="optionD"></button>
+        </div>
+    </div>
+    <div class="result hidden" id="result"></div>
+</div>
+
+<script>
+    // Perguntas e respostas
+    const questions = [
+        {
+            question: "Qual é o nome da geração nascida entre 1946 e 1964?",
+            options: {
+                A: "Millennials",
+                B: "Geração X",
+                C: "Baby Boomers",
+                D: "Geração Z"
+            },
+            answer: "C"
+        },
+        {
+            question: "Qual tecnologia revolucionou a comunicação nos anos 90, mas é pouco usada pelas gerações mais jovens?",
+            options: {
+                A: "Correio Eletrônico (Email)",
+                B: "Telefone Fixo",
+                C: "Messenger",
+                D: "Pagers"
+            },
+            answer: "B"
+        },
+        {
+            question: "Qual dessas gerações é conhecida por ter crescido com a internet e tecnologia digital desde a infância?",
+            options: {
+                A: "Geração X",
+                B: "Baby Boomers",
+                C: "Millennials",
+                D: "Geração Z"
+            },
+            answer: "D"
+        },
+        {
+            question: "Qual é a queixa comum das gerações mais velhas em relação aos jovens de hoje?",
+            options: {
+                A: "Eles passam muito tempo assistindo TV",
+                B: "Eles são muito independentes",
+                C: "Eles não respeitam os valores tradicionais",
+                D: "Eles são muito pacientes"
+            },
+            answer: "C"
+        },
+        {
+            question: "Em que geração o conceito de 'equilíbrio entre vida profissional e pessoal' tornou-se mais popular?",
+            options: {
+                A: "Geração X",
+                B: "Millennials",
+                C: "Baby Boomers",
+                D: "Geração Z"
+            },
+            answer: "B"
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Função para carregar as perguntas
+    function loadQuestion() {
+        if (currentQuestion >= questions.length) {
+            // Mostra o resultado final
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('result').innerHTML = `Quiz finalizado! Sua pontuação: ${score} de ${questions.length}.`;
+        } else {
+            // Esconde o feedback da pergunta anterior
+            document.getElementById('feedback').classList.add('hidden');
+
+            // Carrega a próxima pergunta
+            let q = questions[currentQuestion];
+            document.getElementById('question').innerText = q.question;
+            document.getElementById('optionA').innerText = q.options.A;
+            document.getElementById('optionB').innerText = q.options.B;
+            document.getElementById('optionC').innerText = q.options.C;
+            document.getElementById('optionD').innerText = q.options.D;
+        }
+    }
+
+    // Função para verificar a resposta
+    function checkAnswer(selectedOption) {
+        let correctAnswer = questions[currentQuestion].answer;
+
+        if (selectedOption === correctAnswer) {
+            score++;
+            showFeedback("Resposta correta!", "correct");
+        } else {
+            showFeedback(`Resposta errada! A resposta correta era ${correctAnswer}.`, "incorrect");
+        }
+
+        currentQuestion++;
+        setTimeout(loadQuestion, 2000); // Aguarda 2 segundos antes de carregar a próxima pergunta
+    }
+
+    // Função para mostrar feedback ao jogador
+    function showFeedback(message, status) {
+        let feedbackElement = document.getElementById('feedback');
+        feedbackElement.classList.remove('hidden');
+        feedbackElement.innerText = message;
+
+        // Aplica classes para feedback visual
+        if (status === "correct") {
+            feedbackElement.classList.add('correct');
+            feedbackElement.classList.remove('incorrect');
+        } else {
+            feedbackElement.classList.add('incorrect');
+            feedbackElement.classList.remove('correct');
+        }
+    }
+
+    // Carregar a primeira pergunta
+    loadQuestion();
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Conflitos entre Gerações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options button {
+            display: block;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .feedback {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quiz - Conflitos entre Gerações</h1>
+    <div id="quiz-container">
+        <div class="question" id="question"></div>
+        <div class="feedback hidden" id="feedback"></div>
+        <div class="options">
+            <button onclick="checkAnswer('A')" id="optionA"></button>
+            <button onclick="checkAnswer('B')" id="optionB"></button>
+            <button onclick="checkAnswer('C')" id="optionC"></button>
+            <button onclick="checkAnswer('D')" id="optionD"></button>
+        </div>
+    </div>
+    <div class="result hidden" id="result"></div>
+</div>
+
+<script>
+    // Perguntas e respostas
+    const questions = [
+        {
+            question: "Qual é o nome da geração nascida entre 1946 e 1964?",
+            options: {
+                A: "Millennials",
+                B: "Geração X",
+                C: "Baby Boomers",
+                D: "Geração Z"
+            },
+            answer: "C"
+        },
+        {
+            question: "Qual tecnologia revolucionou a comunicação nos anos 90, mas é pouco usada pelas gerações mais jovens?",
+            options: {
+                A: "Correio Eletrônico (Email)",
+                B: "Telefone Fixo",
+                C: "Messenger",
+                D: "Pagers"
+            },
+            answer: "B"
+        },
+        {
+            question: "Qual dessas gerações é conhecida por ter crescido com a internet e tecnologia digital desde a infância?",
+            options: {
+                A: "Geração X",
+                B: "Baby Boomers",
+                C: "Millennials",
+                D: "Geração Z"
+            },
+            answer: "D"
+        },
+        {
+            question: "Qual é a queixa comum das gerações mais velhas em relação aos jovens de hoje?",
+            options: {
+                A: "Eles passam muito tempo assistindo TV",
+                B: "Eles são muito independentes",
+                C: "Eles não respeitam os valores tradicionais",
+                D: "Eles são muito pacientes"
+            },
+            answer: "C"
+        },
+        {
+            question: "Em que geração o conceito de 'equilíbrio entre vida profissional e pessoal' tornou-se mais popular?",
+            options: {
+                A: "Geração X",
+                B: "Millennials",
+                C: "Baby Boomers",
+                D: "Geração Z"
+            },
+            answer: "B"
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Função para carregar as perguntas
+    function loadQuestion() {
+        if (currentQuestion >= questions.length) {
+            // Mostra o resultado final
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('result').innerHTML = `Quiz finalizado! Sua pontuação: ${score} de ${questions.length}.`;
+        } else {
+            // Esconde o feedback da pergunta anterior
+            document.getElementById('feedback').classList.add('hidden');
+
+            // Carrega a próxima pergunta
+            let q = questions[currentQuestion];
+            document.getElementById('question').innerText = q.question;
+            document.getElementById('optionA').innerText = q.options.A;
+            document.getElementById('optionB').innerText = q.options.B;
+            document.getElementById('optionC').innerText = q.options.C;
+            document.getElementById('optionD').innerText = q.options.D;
+        }
+    }
+
+    // Função para verificar a resposta
+    function checkAnswer(selectedOption) {
+        let correctAnswer = questions[currentQuestion].answer;
+
+        if (selectedOption === correctAnswer) {
+            score++;
+            showFeedback("Resposta correta!", "correct");
+        } else {
+            showFeedback(`Resposta errada! A resposta correta era ${correctAnswer}.`, "incorrect");
+        }
+
+        currentQuestion++;
+        setTimeout(loadQuestion, 2000); // Aguarda 2 segundos antes de carregar a próxima pergunta
+    }
+
+    // Função para mostrar feedback ao jogador
+    function showFeedback(message, status) {
+        let feedbackElement = document.getElementById('feedback');
+        feedbackElement.classList.remove('hidden');
+        feedbackElement.innerText = message;
+
+        // Aplica classes para feedback visual
+        if (status === "correct") {
+            feedbackElement.classList.add('correct');
+            feedbackElement.classList.remove('incorrect');
+        } else {
+            feedbackElement.classList.add('incorrect');
+            feedbackElement.classList.remove('correct');
+        }
+    }
+
+    // Carregar a primeira pergunta
+    loadQuestion();
+</script>
+
+</body>
+</html>
